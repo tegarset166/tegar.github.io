@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I LOVE YOU</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .start-container, .love-container {
+      text-align: center;
+      display: none;
+      z-index: 2;
+    }
+
+    .start-container.active, .love-container.active {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .start-button {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      background-color: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+    }
+
+    .love-text {
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+    }
+
+    .heart {
+      font-size: 5em;
+      color: red;
+      animation: beat 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flower {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall linear infinite;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .secret-message {
+      position: fixed;
+      bottom: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ff4d6d;
+      padding: 10px 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      font-size: 1.2em;
+      animation: fadeInOut 3s ease-in-out;
+      z-index: 3;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Halaman awal -->
+  <div class="start-container active" id="startPage">
+    <h2>Hai Cantikk</h2>
+    <p>Coba klik ini!</p>
+    <button class="start-button" onclick="showLove()">💖💐</button>
+  </div>
+
+  <!-- Halaman I LOVE YOU -->
+  <div class="love-container" id="lovePage">
+    <div class="heart">❤️</div>
+    <div class="love-text">I LOVE YOU ><</div>
+      <div class="love-text">coba klik bunga nya</div>
+  </div>
+
+  <!-- Audio: Link dari file eksternal atau bisa pakai file lokal -->
+  <audio id="bgMusic" loop>
+    <source src="iloveyouso.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    function showLove() {
+      document.getElementById("startPage").classList.remove("active");
+      document.getElementById("lovePage").classList.add("active");
+      document.getElementById("bgMusic").play(); // Play music
+      startFlowerRain();
+    }
+
+    function startFlowerRain() {
+      const flowers = ["🌸", "💮", "🌺", "🌷"];
+      setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+          const flower = document.createElement("div");
+          flower.classList.add("flower");
+          flower.style.left = Math.random() * 100 + "vw";
+          flower.style.animationDuration = (Math.random() * 3 + 4) + "s";
+          flower.style.fontSize = (Math.random() * 10 + 20) + "px";
+          flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+
+          flower.onclick = () => showSecretMessage();
+          document.body.appendChild(flower);
+          setTimeout(() => flower.remove(), 8000);
+        }
+      }, 2000);
+    }
+
+    function showSecretMessage() {
+      const message = document.createElement("div");
+      message.className = "secret-message";
+      message.innerText = "MAAP ALAYY";
+      document.body.appendChild(message);
+      setTimeout(() => message.remove(), 3000);
+    }
+  </script>
+</body>
+</html>
